@@ -1,173 +1,108 @@
 document.addEventListener("DOMContentLoaded", () => {
-    // Initial fetch to display a random cocktail on page load
-    fetchRandomCocktail();
-
+    // DOM elements
     const cocktailButton = document.getElementById('get_cocktail');
     const cocktailContainer = document.getElementById('cocktail');
-    const relatedCocktails = document.querySelectorAll('.related-cocktails a');
+    const searchForm = document.getElementById('searchForm');
+    const searchInput = document.getElementById('searchInput');
 
-    cocktailButton.addEventListener('click', fetchRandomCocktail);
-
-    relatedCocktails.forEach(link => {
-        link.addEventListener('click', (event) => {
-            event.preventDefault();
-            const cocktailName = link.textContent.trim();
-            fetchCocktailByName(cocktailName);
-        });
+    // Event listener for the "Get Cocktail" button
+    cocktailButton.addEventListener('click', () => {
+        fetchRandomCocktail();
     });
 
+    // Event listener for the search form
+    searchForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+        const searchTerm = searchInput.value.trim();
+        if (searchTerm !== '') {
+            fetchCocktailByName(searchTerm);
+        }
+    });
+
+    // Function to fetch a random cocktail from the API
     function fetchRandomCocktail() {
         fetch('https://www.thecocktaildb.com/api/json/v1/1/random.php')
-            .then(res => res.json())
-            .then(res => {
-                createCocktail(res.drinks[0]);
+            .then(response => response.json())
+            .then(data => {
+                const cocktail = data.drinks[0];
+                renderCocktail(cocktail);
+            })
+            .catch(error => {
+                console.error('Error fetching data:', error);
             });
     }
 
-    function fetchCocktailByName(cocktailName) {
-        fetch(`https://www.thecocktaildb.com/api/json/v1/1/search.php?s=${encodeURIComponent(cocktailName)}`)
-            .then(res => res.json())
-            .then(res => {
-                createCocktail(res.drinks[0]);
+    // Function to fetch cocktail by name from the API
+    function fetchCocktailByName(name) {
+        fetch(`https://www.thecocktaildb.com/api/json/v1/1/search.php?s=${name}`)
+            .then(response => response.json())
+            .then(data => {
+                const cocktail = data.drinks ? data.drinks[0] : null;
+                if (cocktail) {
+                    renderCocktail(cocktail);
+                } else {
+                    console.log(`Cocktail "${name}" not found`);
+                }
+            })
+            .catch(error => {
+                console.error('Error fetching data:', error);
             });
     }
 
-    function createCocktail(cocktail) {
+    // Function to render cocktail details
+    const renderCocktail = (cocktail) => {
         const ingredients = [];
-        // Get all ingredients from the object. Up to 15
-        for(let i = 1; i <= 15; i++) {
-            if(cocktail[`strIngredient${i}`]) {
-                ingredients.push(`${cocktail[`strIngredient${i}`]} - ${cocktail[`strMeasure${i}`]}`)
-            } else {
-                // Stop if no more ingredients
-                break;
+
+        // Collect ingredients and measurements
+        for (let i = 1; i <= 15; i++) {
+            const ingredient = cocktail[`strIngredient${i}`];
+            const measure = cocktail[`strMeasure${i}`];
+
+            if (ingredient && measure) {
+                ingredients.push(`${ingredient} - ${measure}`);
+            } else if (ingredient) {
+                ingredients.push(ingredient);
             }
         }
-        
-        const newInnerHTML = `
-            <div class="bg-gray-800 rounded-lg shadow-lg p-6 text-white">
-                <div class="flex items-center justify-between mb-4">
-                    <h2 class="text-2xl font-bold">${cocktail.strDrink}</h2>
-                    <div class="likes">
-                        <button id="likeButton" class="bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded">
-                            <i class="fa fa-thumbs-up"></i>
-                        </button>
-                        <input type="number" id="inputLike" value="0" class="ml-2 w-16 bg-gray-700 text-center text-white rounded" disabled>
+
+        // Construct HTML for cocktail details
+        const cocktailHTML = `
+            <div class="bg-gray-800 rounded-lg shadow-lg p-6">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
+                        <img src="${cocktail.strDrinkThumb}" alt="${cocktail.strDrink}" class="w-full rounded-lg mb-4">
+                        <div class="likes">
+                            <button id="likeButton" class="bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded">
+                                <i class="fas fa-thumbs-up"></i>
+                            </button>
+                            <input type="number" id="inputLike" value="0" class="ml-2 bg-gray-800 text-white border-none w-16 text-center">
+                        </div>
                     </div>
-                </div>
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div class="md:col-span-1">
-                        <img src="${cocktail.strDrinkThumb}" alt="${cocktail.strDrink}" class="w-full h-auto rounded">
-                    </div>
-                    <div class="md:col-span-1">
+                    <div class="text-white">
+                        <h2 class="text-2xl font-bold mb-4">${cocktail.strDrink}</h2>
                         <p><strong>Category:</strong> ${cocktail.strCategory}</p>
                         <p><strong>Glass type:</strong> ${cocktail.strGlass}</p>
                         <p><strong>Type:</strong> ${cocktail.strAlcoholic}</p>
-                        <h3 class="mt-4 mb-2 text-lg font-semibold">Ingredients:</h3>
+                        <h3 class="text-xl font-bold mt-4 mb-2">Ingredients</h3>
                         <ul>
                             ${ingredients.map(ingredient => `<li>${ingredient}</li>`).join('')}
                         </ul>
-                        <h3 class="mt-4 mb-2 text-lg font-semibold">Instructions:</h3>
+                        <h3 class="text-xl font-bold mt-4 mb-2">Instructions</h3>
                         <p>${cocktail.strInstructions}</p>
                     </div>
                 </div>
             </div>
         `;
 
-        cocktailContainer.innerHTML = newInnerHTML;
+        // Insert cocktail HTML into the container
+        cocktailContainer.innerHTML = cocktailHTML;
 
+        // Like button functionality
         const likeButton = document.getElementById('likeButton');
-        const inputLike = document.getElementById('inputLike');
+        const likeCount = document.getElementById('inputLike');
 
         likeButton.addEventListener('click', () => {
-            inputLike.value = parseInt(inputLike.value) + 1;
-        });
-    }
-});
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-document.addEventListener("DOMContentLoaded", () => {
-    // Initial fetch to display a random cocktail on page load
-    fetch('https://www.thecocktaildb.com/api/json/v1/1/random.php')
-        .then(res => res.json())
-        .then(res => {
-            createCocktail(res.drinks[0]);
-        });
-
-    const cocktailButton = document.getElementById('get_cocktail');
-    const cocktailContainer = document.getElementById('cocktail');
-
-    cocktailButton.addEventListener('click', () => {
-        fetch('https://www.thecocktaildb.com/api/json/v1/1/random.php')
-            .then(res => res.json())
-            .then(res => {
-                createCocktail(res.drinks[0]);
-            });
-    });
-
-    const createCocktail = (cocktail) => {
-        const ingredients = [];
-        // Get all ingredients from the object. Up to 15
-        for(let i = 1; i <= 15; i++) {
-            if(cocktail[`strIngredient${i}`]) {
-                ingredients.push(`${cocktail[`strIngredient${i}`]} - ${cocktail[`strMeasure${i}`]}`)
-            } else {
-                // Stop if no more ingredients
-                break;
-            }
-        }
-        
-        const newInnerHTML = `
-            <div class="bg-gray-800 rounded-lg shadow-lg p-6 text-white">
-                <div class="flex items-center justify-between mb-4">
-                    <h2 class="text-2xl font-bold">${cocktail.strDrink}</h2>
-                    <div class="likes">
-                        <button id="likeButton" class="bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded">
-                            <i class="fa fa-thumbs-up"></i>
-                        </button>
-                        <input type="number" id="inputLike" value="0" class="ml-2 w-16 bg-gray-700 text-center text-white rounded" disabled>
-                    </div>
-                </div>
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div class="md:col-span-1">
-                        <img src="${cocktail.strDrinkThumb}" alt="${cocktail.strDrink}" class="w-full h-auto rounded">
-                    </div>
-                    <div class="md:col-span-1">
-                        <p><strong>Category:</strong> ${cocktail.strCategory}</p>
-                        <p><strong>Glass type:</strong> ${cocktail.strGlass}</p>
-                        <p><strong>Type:</strong> ${cocktail.strAlcoholic}</p>
-                        <h3 class="mt-4 mb-2 text-lg font-semibold">Ingredients:</h3>
-                        <ul>
-                            ${ingredients.map(ingredient => `<li>${ingredient}</li>`).join('')}
-                        </ul>
-                        <h3 class="mt-4 mb-2 text-lg font-semibold">Instructions:</h3>
-                        <p>${cocktail.strInstructions}</p>
-                    </div>
-                </div>
-            </div>
-        `;
-
-        cocktailContainer.innerHTML = newInnerHTML;
-
-        const likeButton = document.getElementById('likeButton');
-        const inputLike = document.getElementById('inputLike');
-
-        likeButton.addEventListener('click', () => {
-            inputLike.value = parseInt(inputLike.value) + 1;
+            likeCount.value = parseInt(likeCount.value) + 1;
         });
     };
 });
