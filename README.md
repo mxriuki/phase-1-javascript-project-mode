@@ -17,7 +17,7 @@ Clone the repository:
 
 bash
 Copy code
-git clone https://github.com/your-username/lemon-zing-cocktails.git
+git clone git@github.com:mxriuki/phase-1-javascript-project-mode.git
 Navigate into the project directory:
 
 bash
