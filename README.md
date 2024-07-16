@@ -1,12 +1,11 @@
 Lemon Zing Cocktails
-Welcome to Lemon Zing Cocktails, a web application that provides cocktail enthusiasts with inspiration and information about various cocktails. Explore new drinks, learn their ingredients, and enjoy your cocktail journey with us!
-
+Welcome to Lemon Zing Cocktails, a web application designed for cocktail enthusiasts to explore, discover, and enjoy a variety of cocktails. Whether you're looking for new drink ideas or want to learn about classic mixes, Lemon Zing Cocktails has you covered!
 
 Features
-Get Cocktail Button: Click to fetch a random cocktail and display its details.
-Like Button: Like your favorite cocktails and keep track of your preferences.
-Related Cocktails: Discover related cocktails to broaden your options.
-Responsive Design: Enjoy a seamless experience across devices.
+Get Cocktail Button: Fetches a random cocktail with detailed information.
+Like Button: Save your favorite cocktails to keep track of your preferences.
+Related Cocktails: Discover similar cocktails to expand your drink options.
+Responsive Design: Enjoy a seamless experience on any device.
 Technologies Used
 Frontend: HTML, CSS (Tailwind CSS), JavaScript
 API: The Cocktail DB API
@@ -18,16 +17,10 @@ Clone the repository:
 bash
 Copy code
 git clone git@github.com:mxriuki/phase-1-javascript-project-mode.git
-Navigate into the project directory:
-
-bash
-Copy code
 cd lemon-zing-cocktails
-Open the project in your code editor.
+Install dependencies:
 
-Install dependencies (if you haven't already):
-
-bash
+arduino
 Copy code
 # If using npm
 npm install
@@ -36,20 +29,20 @@ npm install
 yarn install
 Start the development server:
 
-bash
+sql
 Copy code
 # If using npm
 npm start
 
 # If using yarn
 yarn start
-Open your browser and visit  https://mxriuki.github.io/phase-1-javascript-project-mode/ to view the application.
+Open your browser and visit https://mxriuki.github.io/phase-1-javascript-project-mode/ to view the application.
 
 How to Use
 Click the Get Cocktail button to fetch a random cocktail.
-Explore the details of the cocktail including its name, category, ingredients, and instructions.
-Like your favorite cocktails using the thumbs-up button to keep track of your preferences.
-Discover related cocktails for more options and ideas.
+Explore the details of each cocktail including its name, category, ingredients, and instructions.
+Use the Like button to save your favorite cocktails.
+Discover Related Cocktails for more options and ideas.
 Credits
 API: The Cocktail DB API for providing the cocktail data.
 Contributing
@@ -59,6 +52,4 @@ License
 This project is licensed under the MIT License. See the LICENSE file for more information.
 
 Enjoy exploring new cocktails with Lemon Zing Cocktails! 🍹
-
-
 
