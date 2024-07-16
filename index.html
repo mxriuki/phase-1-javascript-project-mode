@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lemon Zing Cocktails</title>
+    <!-- Tailwind CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <!-- Custom Styles -->
+    <style>
+        /* Custom styles can be added here */
+        .likes {
+            display: flex;
+            align-items: center;
+        }
+        .likes button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-right: 10px;
+        }
+        .likes button:hover {
+            background-color: #45a049;
+        }
+        .likes input {
+            border: none;
+            text-align: center;
+            width: 50px;
+            font-size: 1rem;
+        }
+        /* Additional custom styles */
+        .related-cocktails {
+            background-color: #2C3E50; /* Adjust background color as needed */
+            color: #FFFFFF;
+            padding: 20px;
+            border-radius: 10px;
+        }
+        .related-cocktails h3 {
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin-bottom: 1rem;
+        }
+        .related-cocktails ul {
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+        }
+        .related-cocktails li {
+            margin-bottom: 0.5rem;
+        }
+        .related-cocktails a {
+            color: #FFC107; /* Adjust link color as needed */
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+        .related-cocktails a:hover {
+            color: #FFD700; /* Adjust hover color as needed */
+        }
+        /* Decoration section styles */
+        .decoration-section-left {
+            background-color: #1F2937; /* Adjust background color as needed */
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+            margin-top: 20px; /* Adjust margin as needed */
+        }
+        .decoration-section-right {
+            background-color: #6D28D9; /* Adjust background color as needed */
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+            margin-top: 20px; /* Adjust margin as needed */
+        }
+        .decoration-text {
+            color: #FFFFFF;
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body class="bg-gray-900 text-white">
+
+    <!-- Header Section -->
+    <section id="title" class="text-center py-12">
+        <h1 class="text-4xl font-bold">Lemon Zing Cocktails</h1>
+    </section>
+
+    <!-- Main Content Section -->
+    <div class="container mx-auto px-4 grid grid-cols-1 md:grid-cols-2 gap-6">
+
+        <!-- Random Cocktail Section -->
+        <div class="bg-gray-800 rounded-lg shadow-lg p-6 mb-8">
+            <h2 class="text-xl font-bold text-white mb-4">Get cocktail inspiration by clicking below</h2>
+            <button id="get_cocktail" class="bg-yellow-500 hover:bg-yellow-600 text-gray-900 font-bold py-2 px-4 rounded">
+                Get Cocktail
+            </button>
+
+            <!-- Left Decoration Section -->
+            <div class="decoration-section-left mt-6">
+                <p class="decoration-text">Enjoy your cocktail journey!</p>
+            </div>
+        </div>
+
+        <!-- Cocktail Display Section -->
+        <div id="cocktail" class="grid grid-cols-1 gap-6">
+            <!-- Cocktail details will be dynamically added here -->
+        </div>
+
+        <!-- Related Cocktails Section -->
+        <div class="related-cocktails md:col-span-1">
+            <h3>Related Cocktails</h3>
+            <ul>
+                <li><a href="#">Mojito</a></li>
+                <li><a href="#">Cosmopolitan</a></li>
+                <li><a href="#">Martini</a></li>
+                <li><a href="#">Margarita</a></li>
+                <!-- Add more related cocktails as needed -->
+            </ul>
+        </div>
+
+        <!-- Right Decoration Section -->
+        <div class="decoration-section-right">
+            <p class="decoration-text">Discover your favorite cocktail!</p>
+        </div>
+
+    </div>
+
+    <!-- JavaScript -->
+    <script type="module" defer src="./index.js"></script>
+
+</body>
+</html>
