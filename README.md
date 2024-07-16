@@ -59,7 +59,6 @@ License
 This project is licensed under the MIT License. See the LICENSE file for more information.
 
 Enjoy exploring new cocktails with Lemon Zing Cocktails! 🍹
-Feel free to customize the README further based on additional features, acknowledgments, or specific instructions relevant to your project. Adjust the URLs, file paths, and instructions to match your actual project structure and setup.
 
 
 
