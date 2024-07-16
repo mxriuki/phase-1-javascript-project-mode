@@ -43,7 +43,7 @@ npm start
 
 # If using yarn
 yarn start
-Open your browser and visit http://localhost:3000 to view the application.
+Open your browser and visit  https://mxriuki.github.io/phase-1-javascript-project-mode/ to view the application.
 
 How to Use
 Click the Get Cocktail button to fetch a random cocktail.
